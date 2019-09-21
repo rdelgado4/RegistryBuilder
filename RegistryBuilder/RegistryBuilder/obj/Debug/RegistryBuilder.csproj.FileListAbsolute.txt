@@ -1,0 +1,7 @@
+C:\Users\rdelg\source\repos\RegistryBuilder\RegistryBuilder\obj\Debug\RegistryBuilder.csproj.CoreCompileInputs.cache
+C:\Users\rdelg\source\repos\RegistryBuilder\RegistryBuilder\bin\Debug\RegistryBuilder.exe.config
+C:\Users\rdelg\source\repos\RegistryBuilder\RegistryBuilder\bin\Debug\RegistryBuilder.exe
+C:\Users\rdelg\source\repos\RegistryBuilder\RegistryBuilder\bin\Debug\RegistryBuilder.pdb
+C:\Users\rdelg\source\repos\RegistryBuilder\RegistryBuilder\obj\Debug\RegistryBuilder.exe
+C:\Users\rdelg\source\repos\RegistryBuilder\RegistryBuilder\obj\Debug\RegistryBuilder.pdb
+C:\Users\rdelg\source\repos\RegistryBuilder\RegistryBuilder\obj\Debug\RegistryBuilder.csprojAssemblyReference.cache
