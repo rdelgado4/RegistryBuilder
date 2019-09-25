@@ -11,27 +11,37 @@ namespace RegistryBuilder
     {
         static void Main(string[] args)
         {
-            string address = @"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION";
+            string addressHKLM = @"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION";
+            string addressHKCU = @"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION";
+            string addressHK32 = @"SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\MAIN\FeatureControl\FEATURE_BROWSER_EMULATION";
+            List<string> addr = new List<string>() { addressHKLM, addressHK32, addressHKCU };
             int value = 11000;
-
+            int count = 2;
+            RegistryHive reg = RegistryHive.LocalMachine;
             try
             {
-                using (RegistryKey baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64))
+                foreach (string HK in addr)
                 {
-                    using (RegistryKey key = baseKey.OpenSubKey(address, RegistryKeyPermissionCheck.ReadWriteSubTree, System.Security.AccessControl.RegistryRights.FullControl))
-                    {
-                        if (key != null)
-                        {
-                            string keyValue = key.GetValue("test.exe", "Not Found") .ToString();
+                    if (count++ > 2)
+                        reg = RegistryHive.CurrentUser;
 
-                            //create a new key 
-                            if (keyValue == "Not Found")
+                    using (RegistryKey baseKey = RegistryKey.OpenBaseKey(reg, RegistryView.Registry64))
+                    {
+                        using (RegistryKey key = baseKey.OpenSubKey(HK, RegistryKeyPermissionCheck.ReadWriteSubTree, System.Security.AccessControl.RegistryRights.FullControl))
+                        {
+                            if (key != null)
                             {
-                                key.SetValue("test.exe", value, RegistryValueKind.DWord); 
-                            }
-                            else if (keyValue != value.ToString())
-                            {
-                                key.SetValue("test.exe", value, RegistryValueKind.DWord);  
+                                string keyValue = key.GetValue("test.exe", "Not Found").ToString();
+
+                                //create a new key 
+                                if (keyValue == "Not Found")
+                                {
+                                    key.SetValue("test.exe", value, RegistryValueKind.DWord);
+                                }
+                                else if (keyValue != value.ToString())
+                                {
+                                    key.SetValue("test.exe", value, RegistryValueKind.DWord);
+                                }
                             }
                         }
                     }
@@ -39,7 +49,7 @@ namespace RegistryBuilder
             }
             catch (Exception ex)  //just for demonstration...it's always best to handle specific exceptions
             {
-                //react appropriately
+                TestExec.InstructionMessage("The Following Exception Occurred: General Exception.");
             }
         }
     }
